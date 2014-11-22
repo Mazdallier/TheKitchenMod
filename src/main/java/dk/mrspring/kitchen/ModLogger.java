@@ -1,25 +1,50 @@
 package dk.mrspring.kitchen;
 
-import dk.mrspring.kitchen.config.BaseConfig;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import org.apache.logging.log4j.Logger;
 
 public class ModLogger
 {
-	// Integers used to choose which type of message to Log
-	public static final int INFO = 0;
-	public static final int WARNING = 1;
-	public static final int ERROR = 2;
-	public static final int DEBUG = 3;
+    // Integers used to choose which type of message to Log
+    public static final int INFO = 0;
+    public static final int WARNING = 1;
+    public static final int ERROR = 2;
+    public static final int DEBUG = 3;
 
-	// Prints a message to the console, obj used if the message is an error and an exception has to be logged
-	public static void print(int type, String message, Object... obj)
-	{
-		String time = new SimpleDateFormat("HH:mm:ss").format(new Date());
+    private static Logger logger;
 
-		switch (type)
-		{
+    public static void initializeLogger(FMLPreInitializationEvent event)
+    {
+        logger = event.getModLog();
+    }
+
+    public static void print(int type, String message)
+    {
+        print(type, message, null);
+    }
+
+    public static void print(int type, String message, Throwable error)
+    {
+        switch (type)
+        {
+            case INFO:
+                logger.info(message);
+                break;
+            case WARNING:
+                logger.warn(message, error);
+                break;
+            case ERROR:
+                logger.error(message, error);
+                break;
+            case DEBUG:
+                logger.debug(message, error);
+                break;
+        }
+
+//		String time = new SimpleDateFormat("HH:mm:ss").format(new Date());
+
+		/*switch (type)
+        {
 			case INFO:
 				System.out.println("[" + time + "] [TheKitchenMod/INFO]: " + message);
 				break;
@@ -38,6 +63,6 @@ public class ModLogger
 			default:
 				System.out.println("[" + time + "] [TheKitchenMod/INFO]: " + message);
 				break;
-		}
-	}
+		}*/
+    }
 }

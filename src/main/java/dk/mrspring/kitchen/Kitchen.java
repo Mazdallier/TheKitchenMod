@@ -42,6 +42,9 @@ public class Kitchen
     @EventHandler
     public static void preInit(FMLPreInitializationEvent event)
     {
+        // Loading the mods logger
+        ModLogger.initializeLogger(event);
+
         // Loading the config files
         ModConfig.load(new File("config"));
 

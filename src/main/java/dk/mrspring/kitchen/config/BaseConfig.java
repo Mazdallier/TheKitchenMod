@@ -36,7 +36,9 @@ public class BaseConfig
 			return config;
 		} else
 		{
-			this.location.getParentFile().mkdir();
+			File configFolder = new File("config\\TheKitchenMod");
+			configFolder.mkdirs();
+//			this.location.getParentFile().mkdir();
 			this.location.createNewFile();
 			this.writeToFile();
 			return this;
